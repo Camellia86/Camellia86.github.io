@@ -1643,9 +1643,22 @@ Each direction extends outward from Itô-pMF and can grow into a research progra
 
 ---
 
-## Acknowledgments
+## Citation
 
-Thanks to the GPT editing team.
+If this article is useful in your research, please cite it as:
+
+> Zixiang Ni. “From Mean Velocity in pMF to Stochastic Branches: How Itô Dynamics Could Move Beyond Generative Averaging.” *Camellia86*, September 2, 2026. https://camellia86.github.io/blog/pmf-ito-branching/
+
+```bibtex
+@misc{ni2026pmfito,
+  author = {Ni, Zixiang},
+  title  = {From Mean Velocity in pMF to Stochastic Branches:
+            How Itô Dynamics Could Move Beyond Generative Averaging},
+  year   = {2026},
+  month  = sep,
+  url    = {https://camellia86.github.io/blog/pmf-ito-branching/}
+}
+```
 
 ---
 
