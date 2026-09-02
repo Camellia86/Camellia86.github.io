@@ -1,0 +1,18 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ site.Title }} home">
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span class="brand-name">{{ site.Title }}</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="{{ "blog/" | relURL }}"{{ if eq .Section "blog" }} aria-current="page"{{ end }}>Writing</a>
+      <a href="{{ "about/" | relURL }}"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
+      <a href="{{ site.Params.github }}" rel="me">GitHub</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
+        <span class="theme-icon theme-icon-light" aria-hidden="true">☼</span>
+        <span class="theme-icon theme-icon-dark" aria-hidden="true">◐</span>
+      </button>
+    </nav>
+  </div>
+</header>
+

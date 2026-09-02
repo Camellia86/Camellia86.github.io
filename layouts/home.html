@@ -1,0 +1,35 @@
+{{ define "main" }}
+<div class="site-shell">
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Independent research notes</p>
+      <h1 id="home-title">Ideas that begin with equations and grow into generative models.</h1>
+      <p class="hero-deck">{{ site.Params.tagline }}</p>
+    </div>
+    <div class="hero-orbit" aria-hidden="true">
+      <span class="orbit-ring orbit-ring-one"></span>
+      <span class="orbit-ring orbit-ring-two"></span>
+      <span class="orbit-core">∫</span>
+    </div>
+  </section>
+
+  <section class="writing-section" aria-labelledby="latest-writing">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Long-form</p>
+        <h2 id="latest-writing">Latest writing</h2>
+      </div>
+      <a class="text-link" href="{{ "blog/" | relURL }}">View all <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="article-list">
+      {{ $posts := where site.RegularPages "Section" "blog" }}
+      {{ range $posts.ByDate.Reverse }}
+        {{ partial "article-card.html" . }}
+      {{ else }}
+        <p class="empty-state">The first essay is on its way.</p>
+      {{ end }}
+    </div>
+  </section>
+</div>
+{{ end }}
+

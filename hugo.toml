@@ -1,0 +1,42 @@
+baseURL = 'https://camellia86.github.io/'
+locale = 'en-US'
+title = 'Camellia86'
+enableRobotsTXT = true
+capitalizeListTitles = false
+
+[params]
+  author = 'Camellia86'
+  description = 'Independent notes on generative modeling, stochastic dynamics, and machine learning.'
+  tagline = 'Research notes on generative models, stochastic dynamics, and the mathematics between them.'
+  github = 'https://github.com/Camellia86'
+  accent = '#b4485a'
+
+[outputs]
+  home = ['HTML', 'RSS']
+  section = ['HTML', 'RSS']
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+  [markup.highlight]
+    noClasses = true
+    style = 'github-dark'
+    lineNos = false
+
+[taxonomies]
+  tag = 'tags'
+
+[privacy]
+  [privacy.youtube]
+    privacyEnhanced = true

@@ -1,0 +1,53 @@
+{{ define "main" }}
+  {{ if eq .Section "blog" }}
+  <article class="post">
+    <header class="post-header site-shell">
+      <a class="back-link" href="{{ "blog/" | relURL }}"><span aria-hidden="true">←</span> All writing</a>
+      <p class="eyebrow">Generative modeling · Stochastic dynamics</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.subtitle }}<p class="post-subtitle">{{ . }}</p>{{ end }}
+      <div class="post-meta">
+        <span>{{ .Date.Format "January 2, 2006" }}</span>
+        <span aria-hidden="true">·</span>
+        <span>{{ .ReadingTime }} minute read</span>
+        <span aria-hidden="true">·</span>
+        <span>{{ .WordCount }} words</span>
+      </div>
+    </header>
+
+    <div class="post-rule" aria-hidden="true"></div>
+
+    <div class="post-layout site-shell">
+      <aside class="post-toc" aria-label="Table of contents">
+        <p class="toc-label">On this page</p>
+        {{ .TableOfContents }}
+      </aside>
+      <div class="post-main">
+        <details class="mobile-toc">
+          <summary>On this page</summary>
+          {{ .TableOfContents }}
+        </details>
+        <div class="prose">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+
+    <footer class="post-end site-shell">
+      <span class="post-end-mark" aria-hidden="true">∎</span>
+      <p>Thanks for reading.</p>
+      <a href="{{ site.Params.github }}">Continue the conversation on GitHub <span aria-hidden="true">↗</span></a>
+    </footer>
+  </article>
+  {{ else }}
+  <article class="simple-page site-shell">
+    <header class="list-header">
+      <p class="eyebrow">Profile</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </header>
+    <div class="prose">{{ .Content }}</div>
+  </article>
+  {{ end }}
+{{ end }}
+

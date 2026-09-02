@@ -1,0 +1,12 @@
+<article class="article-card">
+  <a class="article-card-link" href="{{ .RelPermalink }}">
+    <div class="article-card-copy">
+      <p class="article-kicker">{{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} min read</p>
+      <h2>{{ .Title }}</h2>
+      {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
+      <p class="article-summary">{{ .Summary | plainify | truncate 220 }}</p>
+    </div>
+    <span class="article-arrow" aria-hidden="true">↗</span>
+  </a>
+</article>
+
