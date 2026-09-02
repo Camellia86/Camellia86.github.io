@@ -23,5 +23,16 @@ math = true
 +++
 ```
 
-Push to `main`. GitHub Actions builds the site and publishes it through GitHub Pages.
+Write inline mathematics as `$x_t$`. Protect display mathematics from
+Markdown parsing with the `math` shortcode:
 
+```text
+{{< math >}}
+\begin{aligned}
+x &= y + z \\
+u &= v
+\end{aligned}
+{{< /math >}}
+```
+
+Push to `main`. GitHub Actions builds the site and publishes it through GitHub Pages.

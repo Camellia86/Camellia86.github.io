@@ -78,15 +78,15 @@ The pMF paper uses $\mathbf x$ both for a clean image and for the generalized de
 
 The central distinction is between
 
-$$
+{{< math >}}
 Y=\varepsilon-X,
-$$
+{{< /math >}}
 
 which belongs to one random training pair, and
 
-$$
+{{< math >}}
 v^\star(z,t)=\mathbb E[Y\mid Z_t=z],
-$$
+{{< /math >}}
 
 which averages over all pairs capable of producing $z$ after observing $Z_t=z$. The network sees only $z$ and $t$, so squared loss drives its optimal prediction toward the latter.
 
@@ -96,84 +96,84 @@ which averages over all pairs capable of producing $z$ after observing $Z_t=z$. 
 
 First sample a real image and Gaussian noise. To keep the main argument clean, begin with the unit-variance setting:
 
-$$
+{{< math >}}
 X\sim p_{\mathrm{data}},
 \qquad
 \varepsilon\sim\mathcal N(0,I).
-$$
+{{< /math >}}
 
 This normalization is for exposition. The pMF v3 implementation scales the noise with resolution; for example, its $512\times512$ configuration uses $\sigma=2$, corresponding to covariance $4I$. When $\varepsilon\sim\mathcal N(0,\sigma^2I)$, the noise-variance terms in the Tweedie and score identities below acquire a factor of $\sigma^2$.
 
 Interpolate linearly between data and noise:
 
-$$
+{{< math >}}
 \boxed{Z_t=(1-t)X+t\varepsilon}.
-$$
+{{< /math >}}
 
 Then
 
-$$
+{{< math >}}
 Z_0=X,
 \qquad
 Z_1=\varepsilon.
-$$
+{{< /math >}}
 
 Differentiating one pair with respect to $t$ gives
 
-$$
+{{< math >}}
 \frac{dZ_t}{dt}=\varepsilon-X.
-$$
+{{< /math >}}
 
 Thus the sample-level instantaneous velocity is
 
-$$
+{{< math >}}
 \boxed{Y=\varepsilon-X}.
-$$
+{{< /math >}}
 
 Standard Flow Matching uses the squared loss
 
-$$
+{{< math >}}
 \mathcal L_{\mathrm{FM}}
 =
 \mathbb E\left[
 \left\|v_\theta(Z_t,t)-(\varepsilon-X)\right\|^2
 \right].
-$$
+{{< /math >}}
 
 Many different $(X,\varepsilon)$ pairs can produce the same $z$. When a deterministic regressor encounters their conflicting sample-level velocities, squared loss aggregates them into a conditional mean.
 
 The population optimum of squared loss is the conditional expectation:
 
-$$
+{{< math >}}
 \boxed{
 v^\star(z,t)
 =
 \mathbb E[\varepsilon-X\mid Z_t=z]
 }.
-$$
+{{< /math >}}
 
 More formally, the posterior satisfies
 
-$$
+{{< math >}}
 p(x,\varepsilon\mid z,t)
 \propto
 p_{\mathrm{data}}(x)p_{\mathrm{prior}}(\varepsilon)
 \,\delta\!\left(z-(1-t)x-t\varepsilon\right),
-$$
+{{< /math >}}
 
 and therefore
 
-$$
+{{< math >}}
 v^\star(z,t)
 =
 \int(\varepsilon-x)\,
 p(x,\varepsilon\mid z,t)
 \,dx\,d\varepsilon.
-$$
+{{< /math >}}
 
 The MSE also admits a useful orthogonal decomposition:
 
-$$
+{{< math >}}
 \begin{aligned}
 &\mathbb E\left[\|v_\theta(Z_t,t)-Y\|^2\right]\\
 ={}&
@@ -181,43 +181,43 @@ $$
 +
 \mathbb E\left[\|Y-v^\star(Z_t,t)\|^2\right].
 \end{aligned}
-$$
+{{< /math >}}
 
 The second term is the posterior uncertainty that remains after conditioning on $Z_t$ and is independent of the model. The sample-level target is $Y$, while the population-level object identifiable under squared loss is the posterior mean field $v^\star$.
 
 ---
 
-## 3. Why Does $x$-Prediction Work?
+## 3. Why Does x-Prediction Work?
 
 Starting from the linear interpolation,
 
-$$
+{{< math >}}
 \varepsilon-X=\frac{Z_t-X}{t}.
-$$
+{{< /math >}}
 
 The network can first predict a clean-image-like output $d_\theta(Z_t,t)$ and then convert it into a velocity:
 
-$$
+{{< math >}}
 v_\theta(Z_t,t)
 =
 \frac{Z_t-d_\theta(Z_t,t)}{t}.
-$$
+{{< /math >}}
 
 In that case,
 
-$$
+{{< math >}}
 v_\theta-(\varepsilon-X)
 =
 \frac{X-d_\theta}{t}.
-$$
+{{< /math >}}
 
 For fixed $z,t$, minimizing velocity MSE is therefore equivalent to minimizing image-reconstruction MSE weighted by $1/t^2$. Averaging over time yields a time-weighted objective, while ordinary pixel MSE uses a different weighting. Its optimum is
 
-$$
+{{< math >}}
 \boxed{
 d^\star(z,t)=\mathbb E[X\mid Z_t=z]
 }.
-$$
+{{< /math >}}
 
 This is the posterior interpretation of ordinary $x$-prediction: given the current noisy observation, the network returns the posterior mean. Whenever multiple plausible answers share the same condition, averaging enters at this point.
 
@@ -225,40 +225,40 @@ This is the posterior interpretation of ordinary $x$-prediction: given the curre
 
 In the unit-variance special case $\varepsilon\sim\mathcal N(0,I)$, define
 
-$$
+{{< math >}}
 s_t(z)=\nabla_z\log p_t(z).
-$$
+{{< /math >}}
 
 Tweedie’s formula gives
 
-$$
+{{< math >}}
 \boxed{
 \mathbb E[X\mid Z_t=z]
 =
 \frac{z+t^2s_t(z)}{1-t}
 },
 \qquad 0<t<1.
-$$
+{{< /math >}}
 
 It follows that
 
-$$
+{{< math >}}
 \boxed{
 v^\star(z,t)
 =
 -\frac{z+t\,s_t(z)}{1-t}
 }.
-$$
+{{< /math >}}
 
 Conversely, at the $r=t$ boundary of $x$-prediction, the denoising prediction recovers the score through
 
-$$
+{{< math >}}
 \boxed{
 s_t(z)
 =
 \frac{(1-t)d^\star(z,t)-z}{t^2}
 }.
-$$
+{{< /math >}}
 
 This relation becomes useful in the Itô extension because reverse-time SDEs typically require the score. As $t\to0$, the factor $1/t^2$ amplifies numerical error, so practical implementations benefit from truncation, reweighting, or a separate parameterization.
 
@@ -269,15 +269,15 @@ This relation becomes useful in the Itô extension because reverse-time SDEs typ
 
 The posterior velocity field defines a probability-flow ODE:
 
-$$
+{{< math >}}
 \frac{dZ_\tau}{d\tau}
 =
 v^\star(Z_\tau,\tau).
-$$
+{{< /math >}}
 
 Fix the current state $Z_t^{z,t}=z$. Along the deterministic ODE trajectory through $z$, define the interval-averaged velocity
 
-$$
+{{< math >}}
 \boxed{
 u^\star(z,r,t)
 =
@@ -286,25 +286,25 @@ u^\star(z,r,t)
 v^\star(Z_\tau^{z,t},\tau)
 \,d\tau
 }.
-$$
+{{< /math >}}
 
 Because velocity integrated over time equals displacement,
 
-$$
+{{< math >}}
 (t-r)u^\star(z,r,t)
 =
 z-Z_r^{z,t},
-$$
+{{< /math >}}
 
 or equivalently,
 
-$$
+{{< math >}}
 \boxed{
 Z_r^{z,t}
 =
 z-(t-r)u^\star(z,r,t)
 }.
-$$
+{{< /math >}}
 
 Instantaneous velocity is like the speed shown on a car’s dashboard, while average velocity is the speed computed by a navigation system over the entire journey. Flow Matching learns the former. MeanFlow learns the latter, allowing the model to cross a whole interval at once.
 
@@ -312,49 +312,49 @@ Instantaneous velocity is like the speed shown on a car’s dashboard, while ave
 
 Starting from
 
-$$
+{{< math >}}
 (t-r)u^\star
 =
 \int_r^t v^\star(Z_\tau,\tau)d\tau,
-$$
+{{< /math >}}
 
 differentiate with respect to the upper endpoint $t$:
 
-$$
+{{< math >}}
 v^\star
 =
 u^\star+(t-r)\frac{d}{dt}u^\star.
-$$
+{{< /math >}}
 
 The field $u^\star$ depends on $t$ explicitly and also implicitly through the state $Z_t$, so
 
-$$
+{{< math >}}
 \frac{d}{dt}u^\star(Z_t,r,t)
 =
 \partial_tu^\star
 +
 J_zu^\star\,v^\star.
-$$
+{{< /math >}}
 
 Define the directional total derivative
 
-$$
+{{< math >}}
 \mathcal D_t^q u
 =
 \partial_tu+J_zu\,q.
-$$
+{{< /math >}}
 
 Along the theoretical trajectory, set $q=v^\star$. The material derivative is
 
-$$
+{{< math >}}
 \mathcal D_t^{v^\star}
 =
 \partial_t+v^\star\cdot\nabla_z.
-$$
+{{< /math >}}
 
 This yields the central MeanFlow identity:
 
-$$
+{{< math >}}
 \boxed{
 v^\star(z,t)
 =
@@ -362,15 +362,15 @@ u^\star(z,r,t)
 +
 (t-r)\mathcal D_t^{v^\star}u^\star(z,r,t)
 }.
-$$
+{{< /math >}}
 
 Training data provide the sample-level instantaneous velocity $\varepsilon-X$, while the MeanFlow identity transfers this local supervision to average motion over an entire trajectory. It forms a bridge from an observable instantaneous target to finite-time transport.
 
 At $r=t$, the interval collapses. Since the original definition contains $1/(t-r)$, the boundary value below is understood through continuous extension:
 
-$$
+{{< math >}}
 u^\star(z,t,t)=v^\star(z,t).
-$$
+{{< /math >}}
 
 MeanFlow therefore contains both short-interval Flow Matching and long-interval one-step transport.
 
@@ -380,33 +380,33 @@ MeanFlow therefore contains both short-interval Flow Matching and long-interval 
 
 A pixel-space velocity mixes image and noise components, and its target can be substantially more dispersed than a clean image, with effective support closer to the full ambient space. Image-like targets, by contrast, exhibit the empirical low-dimensional structure of natural images. The two objects have the same tensor dimensions but potentially very different statistical complexity. pMF therefore dresses the average velocity in a more image-like parameterization:
 
-$$
+{{< math >}}
 \boxed{
 D^\star(z,r,t)
 =
 z-t\,u^\star(z,r,t)
 }.
-$$
+{{< /math >}}
 
 The coefficient here is $t$, whereas the trajectory displacement uses $t-r$. Thus, in general,
 
-$$
+{{< math >}}
 D^\star(z,r,t)\neq Z_r^{z,t}.
-$$
+{{< /math >}}
 
 Using
 
-$$
+{{< math >}}
 u^\star=\frac{z-Z_r}{t-r},
-$$
+{{< /math >}}
 
 we obtain
 
-$$
+{{< math >}}
 D^\star
 =
 \frac{tZ_r-rz}{t-r}.
-$$
+{{< /math >}}
 
 This object extrapolates the average motion over $[r,t]$ to time zero, producing an image-like generalized extrapolation. At its two boundaries, it connects a posterior mean to a trajectory endpoint.
 
@@ -414,39 +414,39 @@ This object extrapolates the average motion over $[r,t]$ to time zero, producing
 
 When $r=t$, average velocity reduces to instantaneous velocity:
 
-$$
+{{< math >}}
 D^\star(z,t,t)
 =
 z-tv^\star(z,t)
 =
 \mathbb E[X\mid Z_t=z].
-$$
+{{< /math >}}
 
 This is exactly the posterior mean associated with ordinary $x$-prediction.
 
 When $r=0$,
 
-$$
+{{< math >}}
 D^\star(z,0,t)
 =
 z-tu^\star(z,0,t)
 =
 Z_0^{z,t}.
-$$
+{{< /math >}}
 
 Here it equals the deterministic endpoint obtained by running the probability-flow ODE from the current state back to the data end.
 
 These are two conceptually distinct objects:
 
-$$
+{{< math >}}
 \mathbb E[X\mid Z_t=z]
 \quad\text{and}\quad
 Z_0^{z,t}.
-$$
+{{< /math >}}
 
 The first is the Bayesian posterior mean under the linear stochastic interpolation; the second is the endpoint of the deterministic ODE induced by the marginal velocity field. The boundaries $r=t$ and $r=0$ select these two objects respectively. They can coincide at the degenerate boundary $t=0$ or under additional special structure.
 
-### 5.2 What Happens for $0<r<t$?
+### 5.2 What Happens for 0 < r < t?
 
 In the interior, $D^\star$ is a generalized image extrapolation. The pMF paper proposes a **generalized manifold hypothesis**: empirically, $D^\star(z,r,t)$ resembles a clean or slightly blurred image more closely than a velocity field and may therefore be easier for a pixel Transformer to model.
 
@@ -462,45 +462,45 @@ This distinction also clarifies the range of applicability. The image set may be
 
 pMF lets the network directly output
 
-$$
+{{< math >}}
 D_\theta(z,r,t)=\operatorname{net}_\theta(z,r,t).
-$$
+{{< /math >}}
 
 This is the two-time notation used at the paper level. The released v3 backbone is conditioned explicitly on the interval $h=t-r$, while $t$ is used mainly outside the backbone to convert $D_\theta$ into $u_\theta$. The theoretical function signature describes the mathematical object; the backbone inputs reflect a particular implementation.
 
 The output is converted into average velocity through
 
-$$
+{{< math >}}
 \boxed{
 u_\theta(z,r,t)
 =
 \frac{z-D_\theta(z,r,t)}{t}
 }.
-$$
+{{< /math >}}
 
 Direct use of this expression assumes $t>0$. At the $t=0$ boundary, one can use continuous extension, an explicit boundary condition, or numerical truncation.
 
 Next compute a total derivative along the current trajectory direction:
 
-$$
+{{< math >}}
 \mathcal D_t^{v_{\mathrm{jvp}}}u_\theta
 =
 \partial_tu_\theta
 +
 J_zu_\theta\,v_{\mathrm{jvp}}.
-$$
+{{< /math >}}
 
 The simplified pseudocode in the paper uses
 
-$$
+{{< math >}}
 v_{\mathrm{jvp}}=u_\theta(z,t,t).
-$$
+{{< /math >}}
 
 The official implementation also includes an auxiliary instantaneous-velocity head and uses the conditional velocity $v_c$ as the state direction of the JVP during classifier-free guidance training. The central point remains the same: a JVP requires a direction along which the derivative is taken.
 
 Define the composite instantaneous velocity
 
-$$
+{{< math >}}
 \boxed{
 V_\theta
 =
@@ -508,11 +508,11 @@ u_\theta
 +
 (t-r)\operatorname{sg}[\mathcal D_t^{v_{\mathrm{jvp}}}u_\theta]
 }.
-$$
+{{< /math >}}
 
 The model is then trained against a velocity target:
 
-$$
+{{< math >}}
 \boxed{
 \mathcal L_{\mathrm{pMF}}
 =
@@ -521,11 +521,11 @@ $$
 \left\|V_\theta(Z_t,r,t)-(\varepsilon-X)\right\|^2
 \right]
 }.
-$$
+{{< /math >}}
 
 This is the main pMF pipeline:
 
-$$
+{{< math >}}
 \boxed{
 \text{image-like output}
 \;D_\theta
@@ -538,25 +538,25 @@ $$
 \longrightarrow
 \text{velocity loss}
 }.
-$$
+{{< /math >}}
 
 ### 6.1 What Does the JVP Compute?
 
 The JVP input direction can be written as
 
-$$
+{{< math >}}
 (v_{\mathrm{jvp}},0,1).
-$$
+{{< /math >}}
 
 Therefore,
 
-$$
+{{< math >}}
 \operatorname{JVP}
 =
 J_zu_\theta\,v_{\mathrm{jvp}}
 +
 \partial_tu_\theta.
-$$
+{{< /math >}}
 
 The zero in the middle means that $r$ remains fixed while differentiating with respect to the upper endpoint $t$. A JVP directly computes the derivative in a chosen direction and avoids constructing the enormous full Jacobian.
 
@@ -564,9 +564,9 @@ The zero in the middle means that $r$ remains fixed while differentiating with r
 
 At the level of function values, the MeanFlow identity corresponds to
 
-$$
+{{< math >}}
 V_\theta=u_\theta+(t-r)\mathcal D_t^{v_{\mathrm{jvp}}}u_\theta.
-$$
+{{< /math >}}
 
 The implementation blocks parameter gradients through the JVP branch, so optimization uses a semi-gradient:
 
@@ -596,27 +596,27 @@ Here, **latent-free** refers to a generative path independent of VAE/tokenizer e
 
 At generation time, choose
 
-$$
+{{< math >}}
 r=0,
 \qquad
 t=1,
 \qquad
 Z_1=\varepsilon.
-$$
+{{< /math >}}
 
 The network then directly outputs
 
-$$
+{{< math >}}
 D_\theta(\varepsilon,0,1).
-$$
+{{< /math >}}
 
 When the MeanFlow relation, boundary conditions, and network approximation are sufficiently accurate,
 
-$$
+{{< math >}}
 D_\theta(\varepsilon,0,1)
 \approx
 Z_0.
-$$
+{{< /math >}}
 
 A single forward pass therefore maps noise to the image end.
 
@@ -628,30 +628,30 @@ The following orthogonal decomposition corresponds to the conceptual unguided MS
 
 For any $V_\theta$, the velocity MSE can be written as
 
-$$
+{{< math >}}
 \mathcal L_{\mathrm{pMF}}
 =
 \mathbb E\left[
 \|V_\theta(Z_t,r,t)-v^\star(Z_t,t)\|^2
 \right]
 +C,
-$$
+{{< /math >}}
 
 where
 
-$$
+{{< math >}}
 C
 =
 \mathbb E\left[
 \|Y-v^\star(Z_t,t)\|^2
 \right]
-$$
+{{< /math >}}
 
 is independent of the model.
 
 Under infinite data, an appropriate function space, and ideal optimization, the target fixed point should satisfy
 
-$$
+{{< math >}}
 \boxed{
 u^\star
 +
@@ -664,15 +664,15 @@ J_zu^\star v^\star
 =
 v^\star
 }.
-$$
+{{< /math >}}
 
 This population equation describes the structure of the ideal target. Practical training realizes a more specific optimization procedure through stop-gradient, an approximate JVP direction, CFG, an auxiliary velocity head, and adaptive weighting.
 
 The equation also clarifies the boundary roles of $D_\theta$. At $r=t$,
 
-$$
+{{< math >}}
 D_\theta(z,r,t)=\mathbb E[X\mid Z_t=z].
-$$
+{{< /math >}}
 
 For $r<t$, $D_\theta$ becomes a two-time field constrained by the MeanFlow differential relation.
 
@@ -728,13 +728,13 @@ Standard Itô theory is built on semimartingale structure and a suitable quadrat
 
 Under the classical setting above, replace the deterministic ODE
 
-$$
+{{< math >}}
 dZ_s=v(Z_s,s)ds
-$$
+{{< /math >}}
 
 with the Itô SDE
 
-$$
+{{< math >}}
 \boxed{
 dZ_s
 =
@@ -742,21 +742,21 @@ b(Z_s,s)ds
 +
 \Sigma(Z_s,s)dW_s
 }.
-$$
+{{< /math >}}
 
 The drift $b$ controls the direction of the conditional mean. The stochastic diffusion term $\Sigma dW_s$ controls how trajectories spread after leaving the same state. Define
 
-$$
+{{< math >}}
 a(z,s)=\Sigma(z,s)\Sigma(z,s)^\top.
-$$
+{{< /math >}}
 
 An Itô integral can have zero conditional mean and positive conditional variance. Its mean can remain quiet while individual samples spread in different directions. Quadratic variation, transition laws, and conditional uncertainty enter the model through precisely this mechanism.
 
 A one-dimensional example makes the second-order correction visible. If $dZ=dW$ and $f(Z)=Z^2$, Itô’s formula gives
 
-$$
+{{< math >}}
 df(Z)=2Z\,dW+dt.
-$$
+{{< /math >}}
 
 Although $dW$ has zero mean, applying the curved function $f$ creates a positive $dt$ term. Random fluctuations interacting with curvature produce a systematic change in the mean; this is the source of the second-order Itô correction.
 
@@ -764,27 +764,27 @@ Although $dW$ has zero mean, applying the curved function $f$ creates a positive
 
 The probability-flow ODE of pMF produces a family of marginal densities $p_t$:
 
-$$
+{{< math >}}
 \partial_t p_t
 =
 -\nabla\cdot(vp_t).
-$$
+{{< /math >}}
 
 The marginal density of an SDE satisfies the Fokker–Planck equation:
 
-$$
+{{< math >}}
 \partial_t p_t
 =
 -\nabla\cdot(bp_t)
 +
 \frac12\nabla\cdot\nabla\cdot(ap_t).
-$$
+{{< /math >}}
 
 Setting $b=v$ while adding a nonzero $\Sigma$ introduces an additional diffusion term and changes the marginal path. Preserving the original $p_t$ requires the drift to absorb this contribution.
 
 A natural compatible drift that makes the SDE share the same family of marginals as the original probability-flow ODE is
 
-$$
+{{< math >}}
 \boxed{
 b_i
 =
@@ -793,13 +793,13 @@ v_i
 \frac{1}{2p_t}
 \sum_j\partial_{z_j}(a_{ij}p_t)
 }.
-$$
+{{< /math >}}
 
 Division by $p_t$ and the score form below require a sufficiently smooth positive density, so this is best viewed as an interior-time formula for $t\in(0,1)$. If the data law is singular, discrete, or supported exactly on a lower-dimensional manifold at $t=0$, the endpoint can be handled through a limit, dequantization, or additional regularization.
 
 When $\mu_t$ is singular with respect to the ambient Lebesgue measure, begin with the weak form:
 
-$$
+{{< math >}}
 \boxed{
 \frac{d}{dt}\int \phi(z)\,\mu_t(dz)
 =
@@ -807,23 +807,23 @@ $$
 },
 \qquad
 \phi\in C_c^\infty,
-$$
+{{< /math >}}
 
 where
 
-$$
+{{< math >}}
 \mathcal L_t\phi
 =
 b\cdot\nabla\phi
 +
 \frac12a:\nabla^2\phi.
-$$
+{{< /math >}}
 
 The weak form acts directly on measures and test functions. A sufficiently smooth density reduces it to the pointwise Fokker–Planck and score formulas.
 
 Expanding the compatible drift gives
 
-$$
+{{< math >}}
 \boxed{
 b
 =
@@ -833,11 +833,11 @@ v
 +
 \frac12a\nabla\log p_t
 }.
-$$
+{{< /math >}}
 
 When $a=a(t)$ is independent of the state, $\nabla\cdot a=0$, and the formula simplifies to
 
-$$
+{{< math >}}
 \boxed{
 b
 =
@@ -845,7 +845,7 @@ v
 +
 \frac12a(t)s_t
 }.
-$$
+{{< /math >}}
 
 This is the key design principle: **diffusion strength and drift come as a pair.** Each choice of diffusion strength induces a compatible forward or reverse drift, allowing the model to preserve a target marginal path while shaping conditional randomness.
 
@@ -857,39 +857,39 @@ For a linear Gaussian interpolation, the $r=t$ denoising prediction indirectly y
 
 Suppose a smooth manifold is locally defined by constraints
 
-$$
+{{< math >}}
 F^\alpha(z)=0,
-$$
+{{< /math >}}
 
 and an Itô SDE starting from $Z_0\in M$ must remain on $M$. Each constraint requires at least
 
-$$
+{{< math >}}
 \boxed{
 \nabla F^\alpha(z)^\top\Sigma(z,t)=0
 }
-$$
+{{< /math >}}
 
 and
 
-$$
+{{< math >}}
 \boxed{
 \nabla F^\alpha(z)^\top b(z,t)
 +
 \frac12a(z,t):\nabla^2F^\alpha(z)=0
 }.
-$$
+{{< /math >}}
 
 The first condition keeps diffusion directions tangent to the manifold. The second makes the drift cancel the normal curvature displacement created by quadratic variation. The unit circle offers a simple example. Let $J$ denote a $90^\circ$ rotation. The Stratonovich equation
 
-$$
+{{< math >}}
 dZ_t=JZ_t\circ dW_t
-$$
+{{< /math >}}
 
 is equivalent to the Itô equation
 
-$$
+{{< math >}}
 dZ_t=-\frac12Z_t\,dt+JZ_t\,dW_t.
-$$
+{{< /math >}}
 
 Its sample paths are almost surely continuous and nowhere differentiable, while Itô’s formula gives $d\|Z_t\|^2=0$. A trajectory that starts on $S^1$ therefore remains on $S^1$. Rough motion can live stably on a smooth geometric space.
 
@@ -897,29 +897,29 @@ For a process constrained to a lower-dimensional manifold, densities are usually
 
 pMF is closer to a different branch: states or network outputs need only remain concentrated near an image set most of the time. Let
 
-$$
+{{< math >}}
 \rho(z)=\operatorname{dist}(z,M)^2.
-$$
+{{< /math >}}
 
 Within a smooth tubular neighborhood of $M$, a testable heuristic condition is
 
-$$
+{{< math >}}
 \boxed{
 \mathcal L_t\rho(z)
 \le
 -\lambda\rho(z)+\epsilon_t
 }.
-$$
+{{< /math >}}
 
 Dynkin’s formula and Grönwall’s inequality yield
 
-$$
+{{< math >}}
 \mathbb E[\rho(Z_t)]
 \le
 e^{-\lambda(t-r)}\mathbb E[\rho(Z_r)]
 +
 \int_r^t e^{-\lambda(t-s)}\epsilon_s\,ds.
-$$
+{{< /math >}}
 
 This condition accommodates controlled normal diffusion and is independent of path differentiability. For a nonsmooth $M$, $\rho$ can be replaced by a smooth “image-likeness potential,” such as the reconstruction residual of a frozen autoencoder or a differentiable feature distance. The informal claim that outputs “stay near the image set” then becomes a statement that can be analyzed with a generator, tested experimentally, and developed into a training regularizer.
 
@@ -929,25 +929,25 @@ This condition accommodates controlled normal diffusion and is independent of pa
 
 Define the pathwise average increment rate
 
-$$
+{{< math >}}
 \widehat U_{r,t}
 =
 \frac{Z_t-Z_r}{t-r}.
-$$
+{{< /math >}}
 
 Integrating the SDE gives
 
-$$
+{{< math >}}
 Z_t-Z_r
 =
 \int_r^t b(Z_s,s)ds
 +
 \int_r^t\Sigma(Z_s,s)dW_s.
-$$
+{{< /math >}}
 
 Therefore,
 
-$$
+{{< math >}}
 \boxed{
 \widehat U_{r,t}
 =
@@ -955,20 +955,20 @@ $$
 +
 \frac1{t-r}\int_r^t\Sigma(Z_s,s)dW_s
 }.
-$$
+{{< /math >}}
 
 The first term is the average drift and the second is an average martingale increment. If $\Sigma$ is adapted and square-integrable, then conditional on $\mathcal F_r$,
 
-$$
+{{< math >}}
 \mathbb E\left[
 \int_r^t\Sigma_s dW_s
 \middle|\mathcal F_r
 \right]=0,
-$$
+{{< /math >}}
 
 while its covariance is
 
-$$
+{{< math >}}
 \operatorname{Cov}\left[
 \frac1{t-r}\int_r^t\Sigma_s dW_s
 \middle|\mathcal F_r
@@ -979,7 +979,7 @@ $$
 \int_r^t a_sds
 \middle|\mathcal F_r
 \right].
-$$
+{{< /math >}}
 
 Let $\Delta=t-r$. For nondegenerate diffusion, Brownian displacement has probability order $O_p(\sqrt\Delta)$. Dividing by $\Delta$ makes the stochastic component of the average increment rate $O_p(\Delta^{-1/2})$, with variance $O(\Delta^{-1})$.
 
@@ -995,31 +995,31 @@ The quantity is defined for $t>r$ and becomes singular as $t\downarrow r$. The f
 
 Fix $r$ and write
 
-$$
+{{< math >}}
 \widehat U_t
 =
 \frac{Z_t-Z_r}{t-r}.
-$$
+{{< /math >}}
 
 Because
 
-$$
+{{< math >}}
 (t-r)\widehat U_t=Z_t-Z_r,
-$$
+{{< /math >}}
 
 taking stochastic differentials on both sides gives
 
-$$
+{{< math >}}
 \widehat U_tdt
 +
 (t-r)d\widehat U_t
 =
 b_tdt+\Sigma_tdW_t.
-$$
+{{< /math >}}
 
 Thus,
 
-$$
+{{< math >}}
 \boxed{
 d\widehat U_t
 =
@@ -1027,11 +1027,11 @@ d\widehat U_t
 +
 \frac{\Sigma_t}{t-r}dW_t
 }.
-$$
+{{< /math >}}
 
 Equivalently,
 
-$$
+{{< math >}}
 \boxed{
 b_tdt+\Sigma_tdW_t
 =
@@ -1039,7 +1039,7 @@ b_tdt+\Sigma_tdW_t
 +
 (t-r)d\widehat U_t
 }.
-$$
+{{< /math >}}
 
 This is an exact identity along a stochastic path. It separates the two ingredients required by a stochastic MeanFlow: the finite-variation component describes the average trend, and the martingale component carries branch information from the same starting point.
 
@@ -1047,7 +1047,7 @@ This is an exact identity along a stochastic path. It separates the two ingredie
 
 Let the network predict a deterministic state function $u_\theta(Z_t,r,t)$. Itô’s formula gives
 
-$$
+{{< math >}}
 \begin{aligned}
 du_\theta
 ={}&
@@ -1058,21 +1058,21 @@ du_\theta
 \right]dt\\
 &+J_zu_\theta\Sigma\,dW_t.
 \end{aligned}
-$$
+{{< /math >}}
 
 Here,
 
-$$
+{{< math >}}
 a:\nabla^2u
 =
 \sum_{i,j}a_{ij}\,\partial_{ij}u
-$$
+{{< /math >}}
 
 is computed separately for every output component of the vector-valued function.
 
 Applying the product rule to $(t-r)u_\theta$ gives
 
-$$
+{{< math >}}
 \begin{aligned}
 d[(t-r)u_\theta]
 ={}&
@@ -1087,11 +1087,11 @@ u_\theta
 \right]dt\\
 &+(t-r)J_zu_\theta\Sigma\,dW_t.
 \end{aligned}
-$$
+{{< /math >}}
 
 If a deterministic state function is required to match $dZ_t$ pathwise, matching the finite-variation and martingale coefficients yields
 
-$$
+{{< math >}}
 \boxed{
 b
 =
@@ -1104,17 +1104,17 @@ u
 +\frac12a:\nabla_z^2u
 \right)
 }
-$$
+{{< /math >}}
 
 and
 
-$$
+{{< math >}}
 \boxed{
 \Sigma
 =
 (t-r)J_zu\,\Sigma
 }.
-$$
+{{< /math >}}
 
 The first equation adds an Itô Hessian correction to deterministic MeanFlow. The second asks the network Jacobian to carry the martingale coefficient as well. When $\Sigma$ is nondegenerate and $J_zu$ stays bounded as $t\downarrow r$, the equation drives the Jacobian toward a $1/(t-r)$ scale. This singular scaling suggests a useful division of labor: a deterministic state function can represent the average trend, while independent noise, latent variables, or a transition kernel can represent stochastic branches.
 
@@ -1126,46 +1126,46 @@ The design principle is therefore clear: **the Hessian correction adjusts the fi
 
 For a Markov Itô diffusion, define the two-time transition operator
 
-$$
+{{< math >}}
 (P_{r,t}f)(z)
 =
 \mathbb E[f(Z_t)\mid Z_r=z]
-$$
+{{< /math >}}
 
 and the instantaneous generator
 
-$$
+{{< math >}}
 \mathcal L_tf
 =
 b(\cdot,t)\cdot\nabla f
 +
 \frac12a(\cdot,t):\nabla^2f.
-$$
+{{< /math >}}
 
 The natural finite-time object along a stochastic path is the averaged generator
 
-$$
+{{< math >}}
 \boxed{
 \overline{\mathcal L}_{r,t}f
 =
 \frac{P_{r,t}f-f}{t-r}
 }.
-$$
+{{< /math >}}
 
 Dynkin’s formula gives
 
-$$
+{{< math >}}
 \boxed{
 \overline{\mathcal L}_{r,t}f
 =
 \frac1{t-r}
 \int_r^tP_{r,s}\mathcal L_sf\,ds
 }.
-$$
+{{< /math >}}
 
 Fixing the left endpoint $r$ and differentiating with respect to the right endpoint $t$ yields
 
-$$
+{{< math >}}
 \boxed{
 P_{r,t}\mathcal L_tf
 =
@@ -1173,16 +1173,16 @@ P_{r,t}\mathcal L_tf
 +
 (t-r)\partial_t\overline{\mathcal L}_{r,t}f
 }.
-$$
+{{< /math >}}
 
 Under suitable regularity,
 
-$$
+{{< math >}}
 \overline{\mathcal L}_{r,t}f
 \longrightarrow
 \mathcal L_rf,
 \qquad t\downarrow r.
-$$
+{{< /math >}}
 
 The structure resembles the deterministic MeanFlow identity, but the learning object has changed: instead of asking where one point travels along a unique trajectory, it asks how the conditional expectation of an observable changes under a stochastic transition. This view gives a natural hierarchy:
 
@@ -1190,7 +1190,7 @@ The structure resembles the deterministic MeanFlow identity, but the learning ob
 - With quadratic functions $f_{ij}(z)=z_iz_j$, the generator contains $z_ib_j+z_jb_i+a_{ij}$; together with first moments and a small-time limit, this reveals local diffusion.
 - Learning $P_{r,t}f$ for a sufficiently rich family of test functions amounts, in principle, to learning the full transition kernel.
 
-$$
+{{< math >}}
 \boxed{
 \text{coordinate functions}
 \rightarrow
@@ -1204,7 +1204,7 @@ $$
 \rightarrow
 \text{full transition kernel}
 }.
-$$
+{{< /math >}}
 
 A deterministic flow map obeys a two-time composition law; the stochastic counterpart is Chapman–Kolmogorov consistency. The operator identity is therefore a stochastic extension of the original MeanFlow idea and a concrete direction suggested by the Markov-generator viewpoint.
 
@@ -1219,7 +1219,7 @@ A standard SDE approach learns local objects $(b,a)$, or equivalently a generato
 
 For a forward Markov SDE, define
 
-$$
+{{< math >}}
 u^+(z,r,t)
 =
 \mathbb E\left[
@@ -1227,11 +1227,11 @@ u^+(z,r,t)
 \middle|
 Z_r=z
 \right].
-$$
+{{< /math >}}
 
 Because the Itô integral has zero conditional mean,
 
-$$
+{{< math >}}
 u^+(z,r,t)
 =
 \frac1{t-r}
@@ -1240,39 +1240,39 @@ u^+(z,r,t)
 \middle|
 Z_r=z
 \right].
-$$
+{{< /math >}}
 
 Let
 
-$$
+{{< math >}}
 M(z,r,t)
 =
 \mathbb E[Z_t\mid Z_r=z]
 =
 z+(t-r)u^+(z,r,t).
-$$
+{{< /math >}}
 
 The function $M$ satisfies the backward Kolmogorov equation
 
-$$
+{{< math >}}
 \partial_rM+\mathcal L_rM=0,
 \qquad
 M(z,t,t)=z,
-$$
+{{< /math >}}
 
 with generator
 
-$$
+{{< math >}}
 \mathcal L_rf
 =
 b(z,r)\cdot\nabla_zf
 +
 \frac12a(z,r):\nabla_z^2f.
-$$
+{{< /math >}}
 
 Substituting $M=z+(t-r)u^+$ gives
 
-$$
+{{< math >}}
 \boxed{
 b(z,r)
 =
@@ -1283,11 +1283,11 @@ u^+(z,r,t)
 +\mathcal L_ru^+(z,r,t)
 \right]
 }.
-$$
+{{< /math >}}
 
 Expanded,
 
-$$
+{{< math >}}
 \boxed{
 b
 =
@@ -1299,13 +1299,13 @@ u^+
 +\frac12a:\nabla_z^2u^+
 \right]
 }.
-$$
+{{< /math >}}
 
 Through continuous extension, the conditional-mean formulation has a well-behaved boundary:
 
-$$
+{{< math >}}
 u^+(z,t,t)=b(z,t).
-$$
+{{< /math >}}
 
 Under the Markov and regularity assumptions above, this is an exact identity for the mean of a forward transition. I will call it the **conditional-mean Itô–MeanFlow identity**.
 
@@ -1313,13 +1313,13 @@ The derivative here is taken with respect to the left endpoint $r$. The sign dif
 
 The conditional-mean objective is simple, but it compresses the uncertainty generated by future Brownian increments from the same starting state into a single center. The law of total covariance isolates this lost conditional variance:
 
-$$
+{{< math >}}
 \operatorname{Cov}(Z_t)
 =
 \operatorname{Cov}(\mathbb E[Z_t\mid Z_r])
 +
 \mathbb E[\operatorname{Cov}(Z_t\mid Z_r)].
-$$
+{{< /math >}}
 
 A mean-only output discards the second term. Brownian motion starting at zero has endpoint law $\mathcal N(0,t)$, yet its conditional mean endpoint is always zero. Mean prediction turns an entire Gaussian cloud into a point—the cleanest mathematical miniature of generative averaging.
 
@@ -1329,13 +1329,13 @@ The initial noise in pMF still provides global diversity. Conditional-mean compr
 
 To preserve stochasticity, the learning target can be expanded from a mean to the full conditional law
 
-$$
+{{< math >}}
 p(Z_t\mid Z_r=z).
-$$
+{{< /math >}}
 
 A simple approximation is
 
-$$
+{{< math >}}
 Z_t
 =
 M_\theta(z,r,t)
@@ -1343,13 +1343,13 @@ M_\theta(z,r,t)
 L_\theta(z,r,t)\xi,
 \qquad
 \xi\sim\mathcal N(0,I),
-$$
+{{< /math >}}
 
 which exactly represents a conditional Gaussian kernel. For non-Gaussian or multimodal transitions, use
 
-$$
+{{< math >}}
 Z_t=G_\theta(z,r,t,\xi),
-$$
+{{< /math >}}
 
 so that an auxiliary random variable $\xi$ directly parameterizes a conditional transition kernel.
 
@@ -1357,11 +1357,11 @@ The core idea of “stochastic one-step generation” is to amortize the sampler
 
 The map $G_\theta(z,r,t,\xi)$ first defines a stochastic output kernel. An identifiable distribution-level objective can make it stable and multimodally complete. Chapman–Kolmogorov or semigroup consistency connects kernels across different time spans into a Markov process. Stochastic continuity and the following local moment conditions further specialize that process toward an Itô diffusion:
 
-$$
+{{< math >}}
 \frac{\mathbb E[\Delta Z\mid Z_t=z]}{\Delta t}\to b(z,t),
 \qquad
 \frac{\operatorname{Cov}(\Delta Z\mid Z_t=z)}{\Delta t}\to a(z,t),
-$$
+{{< /math >}}
 
 with higher-order jump moments vanishing at the appropriate rates. Retaining higher-order jump moments leads naturally to a general Markov kernel or jump process. Using a multistep diffusion model inside $G_\theta$ yields a stronger but more expensive hierarchical sampler. A single network call, a few stochastic correction steps, and internal multistep sampling form a continuous spectrum between speed and expressivity.
 
@@ -1371,29 +1371,29 @@ with higher-order jump moments vanishing at the appropriate rates. Retaining hig
 
 Suppose the forward process is
 
-$$
+{{< math >}}
 dZ_t
 =
 b(Z_t,t)dt
 +
 \Sigma(Z_t,t)dW_t,
-$$
+{{< /math >}}
 
 with $a=\Sigma\Sigma^\top$ and marginal density $p_t$. When time runs backward from $T$ to $0$, the reverse-time drift is
 
-$$
+{{< math >}}
 b_{\mathrm{back}}
 =
 b
 -\nabla\cdot a
 -a\nabla\log p_t,
-$$
+{{< /math >}}
 
 where $dt<0$.
 
 Alternatively, introduce a forward-running reverse clock $s=T-t$ and define $Y_s=Z_{T-s}$. Its drift is
 
-$$
+{{< math >}}
 \boxed{
 \bar b(y,s)
 =
@@ -1401,7 +1401,7 @@ $$
 +(\nabla\cdot a)(y,T-s)
 +a(y,T-s)\nabla_y\log p_{T-s}(y)
 }.
-$$
+{{< /math >}}
 
 When the diffusion matrix depends only on time, $\nabla\cdot a=0$.
 
@@ -1414,31 +1414,31 @@ Deriving a reverse SDE from a given forward SDE brings in the score or equivalen
 
 This is the most exciting part. Under a multimodal conditional distribution, squared loss drives a deterministic predictor toward the conditional mean:
 
-$$
+{{< math >}}
 g^\star(z)=\mathbb E[X\mid Z=z].
-$$
+{{< /math >}}
 
 Suppose the same $z$ admits two equally plausible images $x_1,x_2$:
 
-$$
+{{< math >}}
 p(X\mid z)
 =
 \frac12\delta_{x_1}
 +
 \frac12\delta_{x_2}.
-$$
+{{< /math >}}
 
 Deterministic MSE regression gives
 
-$$
+{{< math >}}
 g^\star(z)=\frac{x_1+x_2}{2},
-$$
+{{< /math >}}
 
 so two sharp branches merge into a compromise in pixel or feature space. Mixed textures in image restoration, averaged detail in super-resolution, and blurred futures in video prediction all echo this simple model.
 
 An Itô extension supports a different representation:
 
-$$
+{{< math >}}
 \boxed{
 (z,\xi)
 \longmapsto
@@ -1446,7 +1446,7 @@ X^{(\xi)},
 \qquad
 X^{(\xi)}\sim p(X\mid z)
 }.
-$$
+{{< /math >}}
 
 The condition $z$ stays fixed while the fresh random variable $\xi$ selects a branch. A conditional mean retains only the center of mass; a transition kernel retains the whole distribution. The diffusion matrix $a(z,t)$ can further describe which directions are most ambiguous and most worth expanding. In this view, the Itô term gives the model a set of **conditional branch coordinates**.
 
@@ -1458,7 +1458,7 @@ In principle, a sufficiently expressive deterministic transport can map continuo
 
 The operator view above decomposes the averaging problem into three levels:
 
-$$
+{{< math >}}
 \boxed{
 \text{coordinate functions}
 \rightarrow
@@ -1472,15 +1472,15 @@ $$
 \rightarrow
 \text{full conditional distribution}
 }.
-$$
+{{< /math >}}
 
 Matching coordinate functions alone keeps the model at the mean level. Adding quadratic functions reveals the conditional covariance $a$ and tells the model how branches should open. Matching a sufficiently rich family of nonlinear observables can recover the full transition kernel. For example, in a perceptual feature space $\phi(x)$, consider
 
-$$
+{{< math >}}
 f_\omega(x)
 =
 \exp\!\left(i\omega^\top\phi(x)\right).
-$$
+{{< /math >}}
 
 Matching $P_{r,t}f_\omega$ over many frequencies $\omega$ amounts to matching the characteristic function of the conditional feature distribution. MMD, energy distance, adversarial feature matching, conditional score matching, and conditional flow matching can all live at this level. MeanFlow provides the two-time amortization structure; a distribution-level loss unfolds an “average answer” into a family of answers.
 
@@ -1488,29 +1488,29 @@ Matching $P_{r,t}f_\omega$ over many frequencies $\omega$ amounts to matching th
 
 Extend the deterministic generalized denoising field to
 
-$$
+{{< math >}}
 D_\theta(z,r,t,\xi),
 \qquad
 \xi\sim\mathcal N(0,I),
-$$
+{{< /math >}}
 
 and define
 
-$$
+{{< math >}}
 u_\theta(z,r,t,\xi)
 =
 \frac{z-D_\theta(z,r,t,\xi)}{t}.
-$$
+{{< /math >}}
 
 At the one-step generation boundary $r=0$, each value of $\xi$ selects an image branch:
 
-$$
+{{< math >}}
 D_\theta(z,0,t,\xi)
 \sim
 K^{\leftarrow}_{t,0}(z,\cdot)
 :=
 \operatorname{Law}(Z_0\mid Z_t=z).
-$$
+{{< /math >}}
 
 Call this provisional idea **Branch MeanFlow**. One possible training recipe contains four parts:
 
@@ -1573,29 +1573,29 @@ A probability-flow ODE, a mean-only kernel, a full stochastic kernel, and a few 
 
 The core of original pMF is a chain connecting image output, average velocity, and dynamical supervision:
 
-$$
+{{< math >}}
 \boxed{
 \text{easy-to-model image output}
 \xrightarrow{D_\theta\to u_\theta\to V_\theta}
 \text{dynamically consistent velocity supervision}
 }.
-$$
+{{< /math >}}
 
 Statistically, the network learns
 
-$$
+{{< math >}}
 \boxed{
 v^\star(z,t)
 =
 \mathbb E[\varepsilon-X\mid Z_t=z]
 }.
-$$
+{{< /math >}}
 
 Dynamically, MeanFlow compresses average motion over an entire ODE interval into a two-time field. At $r=0,t=1$, one forward pass can therefore predict the endpoint.
 
 After adding Itô stochastic increments, the drift/score correction that preserves the same marginal path is
 
-$$
+{{< math >}}
 \boxed{
 b
 =
@@ -1603,23 +1603,23 @@ v
 +
 \frac{1}{2p_t}\nabla\cdot(ap_t)
 }.
-$$
+{{< /math >}}
 
 The Itô generator additionally introduces the second-order drift correction
 
-$$
+{{< math >}}
 \boxed{
 \frac12a:\nabla^2u
 }
-$$
+{{< /math >}}
 
 and the product differential $d[(t-r)u]$ contains the martingale term
 
-$$
+{{< math >}}
 \boxed{
 (t-r)J_zu\,\Sigma\,dW
 }.
-$$
+{{< /math >}}
 
 The learning object now separates into three levels. A standard route learns local $(b,a)$ or a score/reverse drift. A mean-only route outputs a conditional mean. A fully stochastic route learns a transition kernel. The first captures local stochastic dynamics, the second still averages, and the third preserves the full branch structure under the same condition.
 

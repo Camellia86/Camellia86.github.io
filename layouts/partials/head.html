@@ -36,8 +36,8 @@
 <script>
   window.MathJax = {
     tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['\\[', '\\]']],
       processEscapes: true,
       tags: 'ams'
     },
@@ -54,4 +54,3 @@
 
 {{- $script := resources.Get "js/site.js" | minify | fingerprint }}
 <script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
-
