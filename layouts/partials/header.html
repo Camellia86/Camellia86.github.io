@@ -2,7 +2,7 @@
   <div class="header-inner">
     <a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ site.Title }} home">
       <span class="brand-mark" aria-hidden="true">C</span>
-      <span class="brand-name">{{ site.Title }}</span>
+      <span class="brand-name">{{ site.Params.brand | default site.Title }}</span>
     </a>
     <nav class="site-nav" aria-label="Primary navigation">
       <a href="{{ "blog/" | relURL }}"{{ if eq .Section "blog" }} aria-current="page"{{ end }}>Writing</a>
@@ -15,4 +15,3 @@
     </nav>
   </div>
 </header>
-

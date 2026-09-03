@@ -5,9 +5,10 @@ enableRobotsTXT = true
 capitalizeListTitles = false
 
 [params]
-  author = 'Camellia86'
-  description = 'Independent notes on generative modeling, stochastic dynamics, and machine learning.'
-  tagline = 'Research notes on generative models, stochastic dynamics, and the mathematics between them.'
+  author = 'Zixiang Ni'
+  brand = 'Camellia86'
+  description = 'Research notes by Zixiang Ni on ML and DL theory, scaling laws, post-training, embodied intelligence, AI for Science, finance, and mathematics.'
+  tagline = 'My research spans ML & DL theory, scaling laws, post-training, embodied intelligence, and AI for Science. I am also interested in finance and mathematics.'
   github = 'https://github.com/Camellia86'
   accent = '#b4485a'
 

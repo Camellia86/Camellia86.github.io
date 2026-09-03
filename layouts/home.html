@@ -1,23 +1,61 @@
 {{ define "main" }}
 <div class="site-shell">
-  <section class="home-hero" aria-labelledby="home-title">
+  <section
+    class="home-hero"
+    aria-labelledby="home-title"
+    data-seasonal-hero
+    data-season="autumn"
+    data-title-spring="Spring of Bayesian Iris"
+    data-title-summer="Summer of Stochastic Neroli"
+    data-title-autumn="Autumn of Diffusion Camellia"
+    data-title-winter="Winter of Recursive Snowfluff"
+    data-image-spring="{{ "images/spring-bayesian-iris.webp" | relURL }}"
+    data-image-summer="{{ "images/summer-stochastic-neroli.webp" | relURL }}"
+    data-image-autumn="{{ "images/autumn-diffusion-camellia.webp" | relURL }}"
+    data-image-winter="{{ "images/winter-recursive-snowfluff.webp" | relURL }}"
+    data-alt-spring="Watercolor irises and a small bird on a slender spring branch"
+    data-alt-summer="Watercolor neroli blossoms and a small bird on a sunlit citrus branch"
+    data-alt-autumn="Watercolor camellias, autumn maple leaves, and a small bird on a slender branch"
+    data-alt-winter="Watercolor snow-covered branches, icy blue leaves, and recursive snowflake patterns"
+    data-width-spring="1254"
+    data-height-spring="1254"
+    data-width-summer="1224"
+    data-height-summer="1285"
+    data-width-autumn="1212"
+    data-height-autumn="1298"
+    data-width-winter="1224"
+    data-height-winter="1285"
+  >
     <div class="hero-copy">
-      <p class="eyebrow">Independent research notes</p>
-      <h1 id="home-title">Ideas that begin with equations and grow into generative models.</h1>
+      <p class="eyebrow">Zixiang Ni · Personal research notebook</p>
+      <h1 id="home-title">Autumn of Diffusion Camellia</h1>
       <p class="hero-deck">{{ site.Params.tagline }}</p>
+      <ul class="research-interests" aria-label="Research interests">
+        <li>ML &amp; DL Theory</li>
+        <li>Scaling Laws</li>
+        <li>Post-training</li>
+        <li>Embodied Intelligence</li>
+        <li>AI for Science</li>
+        <li>Finance &amp; Mathematics</li>
+      </ul>
+      <div class="hero-actions">
+        <a class="hero-primary" href="{{ "blog/" | relURL }}">Explore the writing <span aria-hidden="true">→</span></a>
+        <a class="hero-secondary" href="{{ site.Params.github }}" rel="me">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
-    <div class="hero-orbit" aria-hidden="true">
-      <span class="orbit-ring orbit-ring-one"></span>
-      <span class="orbit-ring orbit-ring-two"></span>
-      <span class="orbit-core">∫</span>
-    </div>
+    <figure class="hero-art">
+      <img id="home-season-art" width="1212" height="1298" alt="" decoding="async" fetchpriority="high" hidden>
+      <noscript>
+        <img src="{{ "images/autumn-diffusion-camellia.webp" | relURL }}" width="1212" height="1298" alt="Watercolor camellias, autumn maple leaves, and a small bird on a slender branch">
+      </noscript>
+    </figure>
   </section>
 
   <section class="writing-section" aria-labelledby="latest-writing">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Long-form</p>
-        <h2 id="latest-writing">Latest writing</h2>
+        <p class="eyebrow">Research notebook</p>
+        <h2 id="latest-writing">Recent writing</h2>
       </div>
       <a class="text-link" href="{{ "blog/" | relURL }}">View all <span aria-hidden="true">→</span></a>
     </div>
@@ -32,4 +70,3 @@
   </section>
 </div>
 {{ end }}
-

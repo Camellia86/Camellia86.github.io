@@ -7,6 +7,37 @@
 
   root.dataset.theme = theme;
 
+  var seasonalHero = document.querySelector('[data-seasonal-hero]');
+  if (seasonalHero) {
+    var weightedSeasons = [
+      'spring', 'spring', 'spring',
+      'summer', 'summer', 'summer',
+      'autumn', 'autumn', 'autumn',
+      'winter'
+    ];
+    var season = weightedSeasons[Math.floor(Math.random() * weightedSeasons.length)];
+    var seasonKey = season.charAt(0).toUpperCase() + season.slice(1);
+    var seasonalTitle = document.getElementById('home-title');
+    var seasonalArt = document.getElementById('home-season-art');
+
+    seasonalHero.dataset.season = season;
+    root.dataset.homeSeason = season;
+
+    if (seasonalTitle) {
+      seasonalTitle.textContent = seasonalHero.dataset['title' + seasonKey];
+    }
+
+    if (seasonalArt) {
+      seasonalArt.addEventListener('load', function () {
+        seasonalArt.hidden = false;
+      }, { once: true });
+      seasonalArt.width = Number(seasonalHero.dataset['width' + seasonKey]);
+      seasonalArt.height = Number(seasonalHero.dataset['height' + seasonKey]);
+      seasonalArt.src = seasonalHero.dataset['image' + seasonKey];
+      seasonalArt.alt = seasonalHero.dataset['alt' + seasonKey];
+    }
+  }
+
   if (button) {
     button.addEventListener('click', function () {
       var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -28,4 +59,3 @@
     window.addEventListener('resize', updateProgress);
   }
 })();
-
