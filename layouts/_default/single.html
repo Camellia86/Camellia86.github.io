@@ -7,6 +7,10 @@
       <h1>{{ .Title }}</h1>
       {{ with .Params.subtitle }}<p class="post-subtitle">{{ . }}</p>{{ end }}
       <div class="post-meta">
+        {{ with .Params.author }}
+        <span>{{ . }}</span>
+        <span aria-hidden="true">·</span>
+        {{ end }}
         <span>{{ .Date.Format "January 2, 2006" }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ .ReadingTime }} minute read</span>
@@ -50,4 +54,3 @@
   </article>
   {{ end }}
 {{ end }}
-
