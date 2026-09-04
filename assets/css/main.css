@@ -521,8 +521,15 @@ html[data-theme="dark"] .hero-art img {
 .home-hero[data-season="winter"] .hero-art img {
   width: auto;
   max-height: 660px;
-  -webkit-mask-image: radial-gradient(ellipse 76% 82% at 50% 48%, #000 72%, transparent 100%);
-  mask-image: radial-gradient(ellipse 76% 82% at 50% 48%, #000 72%, transparent 100%);
+  padding: 9px;
+  background: #fbfaf7;
+  border: 1px solid color-mix(in srgb, var(--season-deep) 48%, #8a7862);
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--season-deep) 26%, #d8cbb8),
+    0 0 0 5px color-mix(in srgb, var(--season-deep) 52%, #8a7862),
+    0 28px 56px rgba(38, 32, 25, 0.16);
+  filter: none;
 }
 
 .writing-section {
