@@ -1,0 +1,5 @@
+{{- $posts := slice -}}
+{{- range where site.RegularPages "Section" "blog" -}}
+  {{- $posts = $posts | append (dict "path" .RelPermalink "title" .Title "url" .Permalink) -}}
+{{- end -}}
+{{- dict "repository" "Camellia86/Camellia86.github.io" "posts" $posts | jsonify -}}

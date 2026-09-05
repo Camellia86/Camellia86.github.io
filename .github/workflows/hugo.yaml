@@ -18,6 +18,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+      issues: write
     env:
       HUGO_VERSION: 0.165.0
       HUGO_ENVIRONMENT: production
@@ -43,6 +47,11 @@ jobs:
       - name: Build site
         run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
+      - name: Prepare article comment threads
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/sync-comments.mjs
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
@@ -58,4 +67,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-

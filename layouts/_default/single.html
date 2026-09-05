@@ -21,6 +21,19 @@
 
     <div class="post-rule" aria-hidden="true"></div>
 
+    <div class="reader-toolbar site-shell" aria-label="Reading preferences" role="region" hidden>
+      <div class="font-controls" role="group" aria-label="Article font size">
+        <span class="reader-label">Text size</span>
+        <button type="button" data-font-step="-10" aria-label="Decrease article font size" title="Smaller text">A−</button>
+        <button type="button" id="font-reset" aria-label="Reset article font size to 100%" title="Reset text size"><output id="font-size-value" aria-live="polite">100%</output></button>
+        <button type="button" data-font-step="10" aria-label="Increase article font size" title="Larger text">A+</button>
+      </div>
+      <div class="reader-actions">
+        <button type="button" id="focus-toggle" aria-pressed="false">Focus mode</button>
+        <a href="#comments">Discussion <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+
     <div class="post-layout site-shell">
       <aside class="post-toc" aria-label="Table of contents">
         <p class="toc-label">On this page</p>
@@ -34,13 +47,14 @@
         <div class="prose">
           {{ .Content }}
         </div>
+        {{ partial "comments.html" . }}
       </div>
     </div>
 
     <footer class="post-end site-shell">
       <span class="post-end-mark" aria-hidden="true">∎</span>
       <p>Thanks for reading.</p>
-      <a href="{{ site.Params.github }}">Continue the conversation on GitHub <span aria-hidden="true">↗</span></a>
+      <a href="#comments">Leave a thought in the discussion <span aria-hidden="true">↑</span></a>
     </footer>
   </article>
   {{ else }}

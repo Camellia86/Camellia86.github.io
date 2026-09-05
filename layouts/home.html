@@ -42,14 +42,26 @@
         <a class="hero-primary" href="{{ "blog/" | relURL }}">Explore the writing <span aria-hidden="true">→</span></a>
         <a class="hero-secondary" href="{{ site.Params.github }}" rel="me">GitHub <span aria-hidden="true">↗</span></a>
       </div>
+      <div class="season-picker" role="group" aria-label="Choose a season" hidden>
+        <span class="season-picker-label">A change of season</span>
+        <div class="season-options">
+          <button type="button" data-season-choice="spring" aria-pressed="false"><span aria-hidden="true">✿</span> Spring</button>
+          <button type="button" data-season-choice="summer" aria-pressed="false"><span aria-hidden="true">☼</span> Summer</button>
+          <button type="button" data-season-choice="autumn" aria-pressed="true"><span aria-hidden="true">❧</span> Autumn</button>
+          <button type="button" data-season-choice="winter" aria-pressed="false"><span aria-hidden="true">❄</span> Winter</button>
+        </div>
+      </div>
     </div>
     <figure class="hero-art">
-      <img id="home-season-art" width="1212" height="1298" alt="" decoding="async" fetchpriority="high" hidden>
-      <noscript>
-        <img src="{{ "images/autumn-diffusion-camellia.webp" | relURL }}" width="1024" height="1536" alt="Watercolor anime woman surrounded by red camellias and autumn maple leaves">
-      </noscript>
+      <img id="home-season-art" src="{{ "images/autumn-diffusion-camellia.webp" | relURL }}" width="1024" height="1536" alt="Watercolor anime woman surrounded by red camellias and autumn maple leaves" decoding="async" fetchpriority="high">
+      <figcaption><span aria-hidden="true">01 — 04</span> A notebook for every season</figcaption>
     </figure>
   </section>
+
+  <div class="notebook-strip" aria-label="About this notebook">
+    <p><span class="notebook-dot" aria-hidden="true"></span> Ideas in progress, written with care.</p>
+    <a href="{{ "index.xml" | relURL }}">Follow via RSS <span aria-hidden="true">↗</span></a>
+  </div>
 
   <section class="writing-section" aria-labelledby="latest-writing">
     <div class="section-heading">
@@ -59,6 +71,7 @@
       </div>
       <a class="text-link" href="{{ "blog/" | relURL }}">View all <span aria-hidden="true">→</span></a>
     </div>
+    {{ partial "search.html" . }}
     <div class="article-list">
       {{ $posts := where site.RegularPages "Section" "blog" }}
       {{ range $posts.ByDate.Reverse }}

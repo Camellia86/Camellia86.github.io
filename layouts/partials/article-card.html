@@ -1,12 +1,14 @@
-<article class="article-card">
+<article class="article-card" data-search-text="{{ printf "%s %s %s %s" .Title (.Params.subtitle | default "") (.Summary | plainify) (delimit (.Params.tags | default slice) " ") | lower }}">
   <a class="article-card-link" href="{{ .RelPermalink }}">
     <div class="article-card-copy">
       <p class="article-kicker">{{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} min read</p>
       <h2>{{ .Title }}</h2>
       {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
       <p class="article-summary">{{ .Summary | plainify | truncate 220 }}</p>
+      {{ with .Params.tags }}
+      <ul class="article-tags" aria-label="Topics">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+      {{ end }}
     </div>
     <span class="article-arrow" aria-hidden="true">↗</span>
   </a>
 </article>
-

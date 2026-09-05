@@ -13,8 +13,14 @@ capitalizeListTitles = false
   accent = '#b4485a'
 
 [outputs]
-  home = ['HTML', 'RSS']
+  home = ['HTML', 'RSS', 'Comments']
   section = ['HTML', 'RSS']
+
+[outputFormats.Comments]
+  mediaType = 'application/json'
+  baseName = 'comments-index'
+  isPlainText = true
+  notAlternative = true
 
 [markup]
   [markup.goldmark]

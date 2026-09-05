@@ -1,0 +1,19 @@
+<section class="comments-panel" id="comments" aria-labelledby="comments-title" data-comment-path="{{ .RelPermalink }}" data-comment-index="{{ "comments-index.json" | relURL }}">
+  <div class="comments-heading">
+    <div>
+      <p class="eyebrow">The conversation continues</p>
+      <h2 id="comments-title">Leave a thought.</h2>
+    </div>
+    <span class="comment-symbol" aria-hidden="true">“</span>
+  </div>
+  <p class="comments-intro">Questions, corrections, or a different perspective? You’re welcome here.</p>
+  <p class="comments-privacy">Comments are public and hosted on GitHub. Load them here, then sign in to GitHub to join the discussion. Nothing is sent to GitHub until you load comments or follow a GitHub link.</p>
+  <div class="comments-actions">
+    <button class="load-comments" type="button" id="load-comments" hidden>Load comments</button>
+    <a id="discussion-link" href="https://github.com/Camellia86/Camellia86.github.io/issues?q={{ printf "is:issue \"%s\"" .RelPermalink | urlquery }}" target="_blank" rel="noopener noreferrer">Join on GitHub <span aria-hidden="true">↗</span></a>
+  </div>
+  <p class="comments-status" id="comments-status" role="status" aria-live="polite"></p>
+  <div id="comment-list"></div>
+  <button class="load-comments" type="button" id="more-comments" hidden>Load more comments</button>
+  <noscript><p>JavaScript is off. You can still read and leave comments using the GitHub link.</p></noscript>
+</section>

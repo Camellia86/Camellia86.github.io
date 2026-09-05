@@ -31,7 +31,16 @@
 <meta property="article:author" content="{{ $author }}">
 {{- end }}
 
-{{- $style := resources.Get "css/main.css" | minify | fingerprint }}
+<script>
+  try {
+    var savedTheme = localStorage.getItem('theme');
+    document.documentElement.dataset.theme = savedTheme === 'dark' || savedTheme === 'light'
+      ? savedTheme : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var savedSize = Number(localStorage.getItem('reading-size')) || 100;
+    document.documentElement.style.setProperty('--reading-scale', Math.max(80, Math.min(160, savedSize)) / 100);
+  } catch (error) {}
+</script>
+{{- $style := slice (resources.Get "css/main.css") (resources.Get "css/notebook.css") | resources.Concat "css/bundle.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
 
 {{- if .Param "math" }}
@@ -54,5 +63,9 @@
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 {{- end }}
 
-{{- $script := resources.Get "js/site.js" | minify | fingerprint }}
+{{- $script := slice (resources.Get "js/site.js") (resources.Get "js/notebook.js") | resources.Concat "js/bundle.js" | minify | fingerprint }}
 <script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
+{{- if and (eq .Section "blog") (not .IsSection) }}
+{{- $comments := resources.Get "js/comments.js" | minify | fingerprint }}
+<script defer src="{{ $comments.RelPermalink }}" integrity="{{ $comments.Data.Integrity }}"></script>
+{{- end }}
