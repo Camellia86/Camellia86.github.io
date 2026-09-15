@@ -29,8 +29,9 @@
     <div class="hero-copy">
       <p class="eyebrow">Zixiang Ni · Personal research notebook</p>
       <h1 id="home-title">Autumn of Diffusion Camellia</h1>
-      <p class="hero-deck">{{ site.Params.tagline }}</p>
-      <ul class="research-interests" aria-label="Research interests">
+      <p class="hero-deck" lang="zh-CN">{{ site.Params.tagline }}</p>
+      <p class="research-label" id="research-label" lang="zh-CN">研究方向</p>
+      <ul class="research-interests" aria-labelledby="research-label">
         <li>ML &amp; DL Theory</li>
         <li>Scaling Laws</li>
         <li>Post-training</li>
@@ -45,10 +46,10 @@
       <div class="season-picker" role="group" aria-label="Choose a season" hidden>
         <span class="season-picker-label">A change of season</span>
         <div class="season-options">
-          <button type="button" data-season-choice="spring" aria-pressed="false"><span aria-hidden="true">✿</span> Spring</button>
-          <button type="button" data-season-choice="summer" aria-pressed="false"><span aria-hidden="true">☼</span> Summer</button>
-          <button type="button" data-season-choice="autumn" aria-pressed="true"><span aria-hidden="true">❧</span> Autumn</button>
-          <button type="button" data-season-choice="winter" aria-pressed="false"><span aria-hidden="true">❄</span> Winter</button>
+          <button type="button" data-season-choice="spring" aria-pressed="false">{{ partial "season-icon.html" "spring" }} Spring</button>
+          <button type="button" data-season-choice="summer" aria-pressed="false">{{ partial "season-icon.html" "summer" }} Summer</button>
+          <button type="button" data-season-choice="autumn" aria-pressed="true">{{ partial "season-icon.html" "autumn" }} Autumn</button>
+          <button type="button" data-season-choice="winter" aria-pressed="false">{{ partial "season-icon.html" "winter" }} Winter</button>
         </div>
       </div>
     </div>

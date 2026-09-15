@@ -40,10 +40,18 @@ Push to `main`. GitHub Actions builds the site and publishes it through GitHub P
 ## Reading experience
 
 - Article toolbar: text size from 80% to 160%, reset, and distraction-free focus mode.
-- Text size, color theme, and the homepage season are remembered on the current device.
+- Text size and color theme are remembered on the current device.
+- Each homepage load randomly selects spring, summer, or autumn with 30% probability each, or winter with 10%. Manual season selection affects only the current page and does not override the next random draw.
 - Homepage and archive search runs locally over titles, topics, and summaries (accent-insensitive).
 - Seasonal artwork, topic labels, active table of contents, and article-only reading progress.
 - No external fonts or analytics. Controls support keyboard navigation and reduced motion.
+
+## Article translations
+
+Translated articles remain separate pages with reciprocal language links. Set
+`params.contentLanguage`, `params.languageLabel`, and `params.translation` (the
+other article's content path) on both versions. Keep the original publication date,
+equations, and bibliographic records when adding a faithful translation.
 
 ## Comments
 

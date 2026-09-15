@@ -12,6 +12,12 @@
 <meta name="description" content="{{ $description }}">
 <meta name="author" content="{{ $author }}">
 <link rel="canonical" href="{{ .Permalink }}">
+{{ with .Params.translation }}
+{{ with site.GetPage . }}
+<link rel="alternate" hreflang="{{ $.Params.contentLanguage }}" href="{{ $.Permalink }}">
+<link rel="alternate" hreflang="{{ .Params.contentLanguage }}" href="{{ .Permalink }}">
+{{ end }}
+{{ end }}
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | absURL }}">
 

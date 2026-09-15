@@ -71,7 +71,14 @@ button:disabled { cursor: not-allowed; opacity: 0.4; }
   font-size: 0.75rem;
   transition: background 180ms, color 180ms, border-color 180ms;
 }
-.season-options button span { margin-right: 0.25rem; }
+.season-options button { display: inline-flex; align-items: center; gap: 0.45rem; }
+.season-icon { width: 20px; height: 20px; flex: 0 0 20px; }
+.hero-deck:lang(zh) { font-family: var(--serif), "Songti SC", "Noto Serif CJK SC", SimSun, serif; line-height: 1.95; }
+.research-label { margin: 1.6rem 0 0.5rem; color: var(--accent-deep); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; }
+.research-label + .research-interests { margin-top: 0; }
+.language-switch { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; font-size: 0.8rem; }
+.language-switch a { padding: 0.35rem 0.85rem; border: 1px solid var(--line); border-radius: 2rem; text-decoration: none; }
+.language-switch a[aria-current="page"] { color: var(--accent-deep); background: var(--accent-soft); border-color: var(--accent); }
 .season-options button:hover { background: var(--paper-soft); }
 .season-options button[aria-pressed="true"] {
   color: var(--accent-deep);

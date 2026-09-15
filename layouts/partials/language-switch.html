@@ -1,0 +1,8 @@
+{{ with .Params.translation }}
+  {{ with site.GetPage . }}
+  <nav class="language-switch" aria-label="Article language">
+    <a href="{{ $.RelPermalink }}" lang="{{ $.Params.contentLanguage }}" hreflang="{{ $.Params.contentLanguage }}" aria-current="page">{{ $.Params.languageLabel }}</a>
+    <a href="{{ .RelPermalink }}" lang="{{ .Params.contentLanguage }}" hreflang="{{ .Params.contentLanguage }}">{{ .Params.languageLabel }}</a>
+  </nav>
+  {{ end }}
+{{ end }}

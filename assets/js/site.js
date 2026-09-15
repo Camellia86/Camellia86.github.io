@@ -10,12 +10,8 @@
 
   var seasonalHero = document.querySelector('[data-seasonal-hero]');
   if (seasonalHero) {
-    var seasons = ['winter', 'spring', 'summer', 'autumn'];
-    var season = seasons[Math.floor(((new Date().getMonth() + 1) % 12) / 3)];
-    try {
-      var savedSeason = localStorage.getItem('season');
-      if (seasons.includes(savedSeason)) season = savedSeason;
-    } catch (error) {}
+    var seasons = ['spring', 'spring', 'spring', 'summer', 'summer', 'summer', 'autumn', 'autumn', 'autumn', 'winter'];
+    var season = seasons[Math.floor(Math.random() * seasons.length)];
     var seasonalTitle = document.getElementById('home-title');
     var seasonalArt = document.getElementById('home-season-art');
     var choices = seasonalHero.querySelectorAll('[data-season-choice]');
@@ -37,7 +33,6 @@
     choices.forEach(function (choice) {
       choice.addEventListener('click', function () {
         setSeason(choice.dataset.seasonChoice);
-        try { localStorage.setItem('season', choice.dataset.seasonChoice); } catch (error) {}
       });
     });
   }

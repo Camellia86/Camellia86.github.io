@@ -9,6 +9,9 @@ draft = false
 [params]
 subtitle = 'From one deterministic endpoint to a distribution of sharp branches'
 math = true
+contentLanguage = 'en-US'
+languageLabel = 'English'
+translation = '/blog/ito-meanflow-generative-averaging-zh'
 +++
 
 One-step generators compress a long trajectory into one network evaluation. That compression is powerful, yet a deterministic prediction can merge several plausible continuations into one conditional average. This note develops a possible way forward: retain the finite-time viewpoint of pixel MeanFlow (pMF), replace deterministic trajectories with Itô diffusions, and let the network amortize an entire **transition kernel** instead of a single endpoint.
