@@ -1,0 +1,71 @@
+{{ define "main" }}
+{{ $research := hugo.Data.research }}
+<article class="research-page site-shell">
+  <header class="research-profile">
+    <div>
+      <p class="eyebrow">Research</p>
+      <h1>{{ site.Params.author }}</h1>
+      <p class="research-affiliation">Independent Researcher</p>
+      <p class="research-intro">My research spans machine learning, post-training, AI infrastructure, embodied intelligence, mathematics, and multimodal understanding and generation.</p>
+    </div>
+    <div class="research-profile-links" aria-label="Academic profiles">
+      <a href="{{ $research.scholar }}">Google Scholar <span aria-hidden="true">↗</span></a>
+      <a href="{{ site.Params.github }}">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <div class="research-layout">
+    <aside class="research-sidebar">
+      <nav aria-label="Research areas">
+        <p class="research-nav-label">Research areas</p>
+        <ol>
+          {{ range $research.categories }}
+          <li><a href="#{{ .id }}"><span>{{ .label }}</span><span class="research-nav-count">{{ add (len .papers) (len .submissions) }}</span></a></li>
+          {{ end }}
+        </ol>
+      </nav>
+    </aside>
+
+    <div class="research-publications">
+      {{ range $index, $category := $research.categories }}
+      <section class="research-area" id="{{ .id }}" aria-labelledby="{{ .id }}-title">
+        <header class="research-area-heading">
+          <span class="research-area-number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
+          <div>
+            <h2 id="{{ .id }}-title">{{ .label }}</h2>
+            {{ with .chinese }}<p lang="zh-CN">{{ . }}</p>{{ end }}
+          </div>
+        </header>
+
+        {{ with .papers }}
+        <h3 class="research-group-label">Publications &amp; preprints</h3>
+        <ul class="research-paper-list">
+          {{ range . }}
+          <li class="research-paper">
+            <div class="research-paper-heading">
+              <h4><a href="{{ .url }}">{{ .title }}</a></h4>
+              <span class="research-paper-year">{{ .year }}</span>
+            </div>
+            <p class="research-authors">{{ range $i, $author := .authors }}{{ if $i }}, {{ end }}{{ if eq $author site.Params.author }}<strong>{{ $author }}</strong>{{ else }}{{ $author }}{{ end }}{{ end }}</p>
+            <p class="research-venue">{{ .venue }}</p>
+            <div class="research-paper-links">
+              <a href="{{ .url }}">{{ .link_label }} <span aria-hidden="true">↗</span></a>
+              <a href="{{ .scholar }}" aria-label="Google Scholar record for {{ .title }}">Scholar <span aria-hidden="true">↗</span></a>
+            </div>
+          </li>
+          {{ end }}
+        </ul>
+        {{ end }}
+
+        {{ with .submissions }}
+        <h3 class="research-group-label research-submissions-label">Under review</h3>
+        <ul class="research-submissions">
+          {{ range . }}<li>{{ . }}</li>{{ end }}
+        </ul>
+        {{ end }}
+      </section>
+      {{ end }}
+    </div>
+  </div>
+</article>
+{{ end }}

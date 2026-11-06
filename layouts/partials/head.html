@@ -48,6 +48,10 @@
 </script>
 {{- $style := slice (resources.Get "css/main.css") (resources.Get "css/notebook.css") | resources.Concat "css/bundle.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+{{- if eq .Layout "research" }}
+{{- $researchStyle := resources.Get "css/research.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $researchStyle.RelPermalink }}" integrity="{{ $researchStyle.Data.Integrity }}">
+{{- end }}
 
 {{- if .Param "math" }}
 <script>

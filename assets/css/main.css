@@ -1086,7 +1086,7 @@ html[data-theme="dark"] .hero-art img {
     font-size: 0.8rem;
   }
 
-  .site-nav a:nth-of-type(3) {
+  .site-nav a[rel="me"] {
     display: none;
   }
 

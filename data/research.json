@@ -1,0 +1,240 @@
+{
+  "scholar": "https://scholar.google.com/citations?user=plFrUlgAAAAJ",
+  "categories": [
+    {
+      "id": "machine-learning",
+      "label": "Pre-training & Machine Learning",
+      "chinese": "预训练与机器学习",
+      "papers": [
+        {
+          "title": "CARAT: Do Materials LLMs Reason or Recite?",
+          "authors": [
+            "Jiajun Wu",
+            "Jian Yang",
+            "Zixiang Ni",
+            "Zhenzhu Li",
+            "Bin Chong"
+          ],
+          "venue": "arXiv preprint",
+          "year": 2026,
+          "url": "https://arxiv.org/abs/2609.38340",
+          "link_label": "arXiv",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:zYLM7Y9cAGgC"
+        }
+      ],
+      "submissions": [
+        "Same Function, Different Dynamics: Understanding Muon’s Response to Reparameterization",
+        "Recast: Retargeting Past Trials for Zeroth-Order Inverse Problems"
+      ]
+    },
+    {
+      "id": "reinforcement-learning",
+      "label": "RL & Post-training",
+      "chinese": "强化学习与后训练",
+      "papers": [
+        {
+          "title": "ReTaCo: Residual-Target Control for On-Policy Distillation",
+          "authors": [
+            "Zixiang Ni",
+            "Zhuo Hu",
+            "Renjie Cao",
+            "Weijie Ren",
+            "Binqin Shi",
+            "Weijia Zhang",
+            "Shuheng Cao",
+            "Zhicheng Shi",
+            "Zhenhao Zhang",
+            "Haomin Wen",
+            "Zhiyuan Hu"
+          ],
+          "venue": "arXiv preprint",
+          "year": 2026,
+          "url": "https://arxiv.org/abs/2609.39275",
+          "link_label": "arXiv",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:qjMakFHDy7sC"
+        }
+      ],
+      "submissions": [
+        "DGCR: Learning from Local Corrections for Super-Tiny Function Calling Models",
+        "Valuing Data Before Training: Geometric Coverage and Topological Fidelity Outperform Gradient-Based Selection"
+      ]
+    },
+    {
+      "id": "ai-infra",
+      "label": "AI Infra",
+      "chinese": "AI 基础设施",
+      "papers": [
+        {
+          "title": "Where KV-Cache Error Lives in Looped Language Models: A Diagnostic Study of Ouro and Huginn",
+          "authors": [
+            "Dezhen Lu",
+            "Runguo Li",
+            "Zixiang Ni",
+            "Yuchen Tang",
+            "Xingquan Kong",
+            "Jiaxing Yang",
+            "Jiarui Guo",
+            "Lingxiang Gao"
+          ],
+          "venue": "arXiv preprint",
+          "year": 2026,
+          "url": "https://arxiv.org/abs/2610.41825",
+          "link_label": "arXiv",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:W7OEmFMy1HYC"
+        },
+        {
+          "title": "Recency Is the Wrong Axis: A Negative Result on Windowed Deepest-Plane KV Caching in Looped Language Models",
+          "authors": [
+            "Dezhen Lu",
+            "Runguo Li",
+            "Zixiang Ni",
+            "Yuchen Tang",
+            "Xingquan Kong",
+            "Jiaxing Yang",
+            "Jiarui Guo"
+          ],
+          "venue": "arXiv preprint",
+          "year": 2026,
+          "url": "https://arxiv.org/abs/2610.34436",
+          "link_label": "arXiv",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:Y0pCki6q_DkC"
+        },
+        {
+          "title": "ScaleRLT: Exact Log-Probabilities and Fast Deferred Rollouts for Reinforcement Learning on Looped Transformers",
+          "authors": [
+            "Dezhen Lu",
+            "Zixiang Ni",
+            "Runguo Li"
+          ],
+          "venue": "arXiv preprint",
+          "year": 2026,
+          "url": "https://arxiv.org/abs/2610.34427",
+          "link_label": "arXiv",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:Tyk-4Ss8FVUC"
+        }
+      ],
+      "submissions": []
+    },
+    {
+      "id": "embodied-intelligence",
+      "label": "Embodied Intelligence & Physical AI",
+      "chinese": "具身智能与物理 AI",
+      "papers": [],
+      "submissions": [
+        "Inverse-Conditioned World Models: Shaping Action Responses for Visual Control",
+        "ForeRank: Reusing Established Grasps for Dexterous Transport"
+      ]
+    },
+    {
+      "id": "mathematics",
+      "label": "Mathematics",
+      "chinese": "数学",
+      "papers": [
+        {
+          "title": "The Quartic Hessian Conjecture in Dimension Four",
+          "authors": [
+            "Zixiang Ni"
+          ],
+          "venue": "arXiv preprint",
+          "year": 2026,
+          "url": "https://arxiv.org/abs/2608.14217",
+          "link_label": "arXiv",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:9yKSN-GCB0IC"
+        }
+      ],
+      "submissions": []
+    },
+    {
+      "id": "multimodal",
+      "label": "Multimodal Understanding & Generation",
+      "chinese": "多模态理解与生成",
+      "papers": [
+        {
+          "title": "Read Between the Stickers: Sentiment-Prior Reasoning with Learnable Verbalized Rules for Multimodal Chat Analysis",
+          "authors": [
+            "Zixiang Ni",
+            "Yifei Xu",
+            "Haowen Yang",
+            "Yang Liu",
+            "Ziyang Peng",
+            "Wenlong Li",
+            "Tingting Xin",
+            "Yan Liang",
+            "Yancheng Chen",
+            "Bin Chong",
+            "Yuan Rao"
+          ],
+          "venue": "arXiv preprint",
+          "year": 2026,
+          "url": "https://arxiv.org/abs/2609.13173",
+          "link_label": "arXiv",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:UeHWp8X0CEIC"
+        },
+        {
+          "title": "TFVP-MLLM: Training-Free Visual Prompting Multimodal Large Language Model for Remote Sensing Image Classification",
+          "authors": [
+            "Yifei Xu",
+            "Zixiang Ni",
+            "Pingping Wei",
+            "Chufan Xiao",
+            "Yaochen Li",
+            "Agen Qiu",
+            "Dong Li",
+            "Yuan Rao"
+          ],
+          "venue": "IEEE Transactions on Geoscience and Remote Sensing",
+          "year": 2026,
+          "url": "https://doi.org/10.1109/tgrs.2026.3715010",
+          "link_label": "Paper",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:2osOgNQ5qMEC"
+        },
+        {
+          "title": "TFDepth: Text-guided multi-scale fusion network for monocular depth estimation",
+          "authors": [
+            "Yifei Xu",
+            "Zhongyu Han",
+            "Zixiang Ni",
+            "Yingjie Zong",
+            "Wenlong Li",
+            "Pingping Wei",
+            "Yuan Rao",
+            "Shuiguang Deng"
+          ],
+          "venue": "Neurocomputing, 672, 132781",
+          "year": 2026,
+          "url": "https://doi.org/10.1016/j.neucom.2026.132781",
+          "link_label": "Paper",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:IjCSPb-OGe4C"
+        },
+        {
+          "title": "T2R-pix2pix: A method for constructing rural thematic road network based on pix2pix",
+          "authors": [
+            "Weixin Zhai",
+            "Zixiang Ni",
+            "Zhi Xu",
+            "Jiawen Pan",
+            "Caicong Wu"
+          ],
+          "venue": "Computers and Electronics in Agriculture, 230, 109911",
+          "year": 2025,
+          "url": "https://doi.org/10.1016/j.compag.2025.109911",
+          "link_label": "Paper",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:d1gkVwhDpl0C"
+        },
+        {
+          "title": "T2R-GAN: A CGAN-based model for rural thematic road extraction",
+          "authors": [
+            "Zixiang Ni",
+            "Weixin Zhai"
+          ],
+          "venue": "International Conference on Pattern Recognition (ICPR), pp. 263–276",
+          "year": 2024,
+          "url": "https://doi.org/10.1007/978-3-031-78389-0_18",
+          "link_label": "Paper",
+          "scholar": "https://scholar.google.com/citations?view_op=view_citation&user=plFrUlgAAAAJ&citation_for_view=plFrUlgAAAAJ:u-x6o8ySG0sC"
+        }
+      ],
+      "submissions": []
+    }
+  ]
+}
